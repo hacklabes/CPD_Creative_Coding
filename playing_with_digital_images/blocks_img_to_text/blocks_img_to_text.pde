@@ -4,7 +4,7 @@ int cellSize = 10;
 int wStep;
 int hStep;
 
-String fName = "jdN38Zg.jpg";
+String fName = "Photo on 01-02-16 at 04.45.jpg";
 void setup() {
   size(320, 240);
   inputImg = loadImage(fName);
@@ -52,7 +52,7 @@ void saveFile() {
   textOutput.println("</div>");
 
 
-  textOutput.println("<div id=\"pixelslist\" style=\"font-family: Verdana;font-size: 5px; color: white\">");
+  textOutput.println("<div id=\"pixelslist\" style=\"font-family: Verdana;font-size: 10px; color: white\">");
 
   inputImg.loadPixels();
 

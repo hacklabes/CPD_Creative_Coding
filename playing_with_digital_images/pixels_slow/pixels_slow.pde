@@ -23,11 +23,11 @@ void draw() {
     fill(0);
     text("Drop an image", 20, 20);
   } else if (state == 1) {
-    //img.loadPixels();
+    img.loadPixels();
     backImg.beginDraw();
     for (int i = 0; i < 100; i ++) {
       int index = indY*width + indX;
-      backImg.stroke(0);
+      backImg.stroke(img.pixels[index]);
       backImg.point(indX, indY);
 
       indX = (indX+1)%width;

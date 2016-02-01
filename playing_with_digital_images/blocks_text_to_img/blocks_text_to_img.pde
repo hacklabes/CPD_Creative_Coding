@@ -5,7 +5,7 @@ int wStep;
 int hStep;
 
 void setup() {
-  size(640, 480);
+  size(320, 240);
   memoryImg = createImage(width, height, RGB);
 
   wStep = width/cellSize;
@@ -14,15 +14,19 @@ void setup() {
   String lines[] = loadStrings("image.txt");
   memoryImg.loadPixels();
   int textIndex = 0;
-
   for (int nX = 0; nX < cellSize; nX+=1) {
     for (int nY = 0; nY < cellSize; nY+=1) {
-
+      if (textIndex < lines.length) {
+        if (lines[textIndex].contains("Block")) {
+          textIndex++;
+        }
+      }
       for (int x = nX * wStep; x < wStep*(nX+1); x ++) {
         for (int y = nY * hStep; y < hStep*(nY+1); y++) {
           int index = y * width + x;
 
           if (textIndex < lines.length) {
+
             if (lines[textIndex].split(",").length >= 3) {
               float r = float(lines[textIndex].split(",")[0]);
               float g = float(lines[textIndex].split(",")[1]);
