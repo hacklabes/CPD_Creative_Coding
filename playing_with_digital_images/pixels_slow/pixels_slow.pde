@@ -17,7 +17,6 @@ int h = 480;
 void setup() {
   size(640, 544);
   drop = new SDrop(this);
-  frameRate(520);
   stroke(255);
 }
 
@@ -34,7 +33,7 @@ void draw() {
     img.loadPixels();
     
     backImg.beginDraw();
-    for(int i =0; i < 1 + mouseX*5; i++){
+    for(int i =0; i <  mouseX; i++){
       int index = indY*w + indX;
       pushMatrix();
       translate(0, height-100);
