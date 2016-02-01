@@ -4,7 +4,7 @@ int cellSize = 10;
 int wStep;
 int hStep;
 
-String fName = "IMG_20160125_184824.jpg";
+String fName = "jdN38Zg.jpg";
 void setup() {
   size(320, 240);
   inputImg = loadImage(fName);
@@ -32,6 +32,8 @@ void saveFile() {
   for (int i =0; i < header.length; i++) {
     header[i] = header[i].replaceAll("WIDTH", str(width));
     header[i] = header[i].replaceAll("HEIGHT", str(height));
+    header[i] = header[i].replaceAll("FNAME", fName);
+
     textOutput.println(header[i]);
   }
   
