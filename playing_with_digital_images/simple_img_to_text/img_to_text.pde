@@ -34,4 +34,5 @@ void saveFile() {
   
   // Writes the strings to a file, each on a separate line
   saveStrings("image.txt", txt);
+  exit();
 }
