@@ -3,45 +3,76 @@ import drop.*;
 SDrop drop;
 
 PImage img;
+
 PGraphics backImg;
 int state = 0;
 
 int indX = 0;
 int indY = 0;
 
+int w = 640;
+int h = 480;
+
+
 void setup() {
-  size(640, 480);
-  frameRate(220);
+  size(640, 544);
   drop = new SDrop(this);
+  frameRate(520);
+  stroke(255);
 }
 
 
 void draw() {
   background(255);
   if (state  == 0) {
+  
     textSize(25);
     fill(0);
-    text("Drop an image", 20, 20);
+    text("Drop an image\nand move the mouse to control the speed\nwatch the image being formed pixel by pixel", 20, 20);
+  
   } else if (state == 1) {
     img.loadPixels();
+    
     backImg.beginDraw();
-    for (int i = 0; i < 100; i ++) {
-      int index = indY*width + indX;
+    for(int i =0; i < 1 + mouseX*5; i++){
+      int index = indY*w + indX;
+      pushMatrix();
+      translate(0, height-100);
+      for (int j = 0; j < 10; j++) {
+       color pix  = img.pixels[(index+j)%img.pixels.length];
+       fill(pix);
+       rect(j*width/10, 0, width/10, 100);
+       String colorstr = String.format("R:%.0f\nG:%.0f\nB:%.0f", red(pix), green(pix), blue(pix));
+
+       textSize(15);
+       textLeading(15);
+       textAlign(LEFT, TOP);
+       fill(255);
+       text(colorstr, j*width/10, 50);
+      }
+      popMatrix();
+
       backImg.stroke(img.pixels[index]);
       backImg.point(indX, indY);
-
-      indX = (indX+1)%width;
+      backImg.noFill();
+      
+      indX = (indX+1)%w;
       if (indX == 0) {
-        indY = (indY+1)%height;
+        indY = (indY+1)%h;
+        if (indY == 0) {
+          backImg.background(255);
+        }
       }
     }
     backImg.endDraw();
-    image(backImg, 0, 0);
+    set(0,0,backImg);
+    stroke(255, 0, 0);
+    ellipse(indX, indY, 10, 10);
   }
 }
 
 void dropEvent(DropEvent theDropEvent) {
-  println("");
+  println(theDropEvent);
   println("isFile()\t"+theDropEvent.isFile());
   println("isImage()\t"+theDropEvent.isImage());
   println("isURL()\t"+theDropEvent.isURL());
@@ -50,12 +81,14 @@ void dropEvent(DropEvent theDropEvent) {
   // load the image into our PImage.
   if (theDropEvent.isImage()) {
     println("### loading image ...");
-    img = theDropEvent.loadImage();
-    backImg = createGraphics(img.width, img.height);
-    //backImg = createImage(img.width, img.height, ARGB);
+    img = loadImage(theDropEvent.filePath());
+    img.resize(w, h);
+    backImg = createGraphics(w, h);
     backImg.beginDraw();
     backImg.background(255);
     backImg.endDraw();
     state = 1;
+    indX = 0;
+    indY = 0;
   }
 }
