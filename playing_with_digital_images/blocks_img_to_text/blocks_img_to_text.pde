@@ -25,7 +25,7 @@ void keyPressed() {
 }
 
 void saveFile() {
-  PrintWriter textOutput = createWriter("image.html"); 
+  PrintWriter textOutput = createWriter("output.html"); 
   String header[] = loadStrings("header.html");
 
 
