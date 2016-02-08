@@ -1,4 +1,5 @@
 import drop.*;
+import java.util.*; 
 
 SDrop drop;
 
@@ -22,15 +23,12 @@ void setup() {
 }
 
 void draw() {
-
-
+  background(0);
   if (state == 0) {
-    background(255);
     textSize(15);
-    fill(0);
+    fill(255);
     text("Drag and Drop your text (txt) file image", 20, 20);
   } else if (state == 1) {
-    background(255);
 
     memoryImg.loadPixels();
     int textIndex = 0;
@@ -63,12 +61,16 @@ void draw() {
     memoryImg.updatePixels();
     state = 2;
     set(0, 0, memoryImg);
-    saveFrame("image-######.png");
+    Date d = new Date(); 
+    String fName = "image-"+ d.getTime() + ".png";
+
+    memoryImg.save(savePath(fName));
   } else if (state == 2) {
+    set(0, 0, memoryImg);
+    
     
   }
 }
-
 
 void dropEvent(DropEvent theDropEvent) {
   println(theDropEvent);
